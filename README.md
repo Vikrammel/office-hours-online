@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # OfficeHoursOnline (Oho)
 ### Video chat with drawing/writing with a single student professor and classroom viewing by Mike Hamilton, Colin Maher, Vikram Melkote
 
@@ -18,7 +17,6 @@ site layout: professor's camera is visible in one part of the part at all times.
 3. run `sudo npm install` in project directory
 
 4. run server using `node app.js` or `nodemon`
-=======
-# Office Hours Online
->>>>>>> 43344fd2de6c0edff5088aa5079c2d31ad1a65e1
+
+5. visit the site on `localhost:8080` in a browser
 
