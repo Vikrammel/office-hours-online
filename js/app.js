@@ -1,7 +1,7 @@
 //import { request } from 'http';
 
 //sets environment variables in .env file
-//require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const OpenTok = require('opentok');
@@ -21,7 +21,7 @@ const apiSecret = process.env.API_SECRET;
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 app.get('/signin', (req, res) => {
-    res.sendFile(path.join(__dirname, '../room.html'))}
+    res.sendFile(path.join(__dirname, '../signin.html'))}
 );
 
 app.listen(port, () => console.log('OfficeHoursOnline listening on ' + port));

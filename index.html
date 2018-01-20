@@ -17,10 +17,13 @@
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
             var email = String(profile.getEmail());
+            var contElem = document.getElementById('continue');
             if(email.indexOf("ucsc.edu")== -1){
                 alert("Please sign in with an @ucsc.edu email");
+                contElem.style.visibility='hidden';
             }
             else{
+                contElem.style.visibility='visible';
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'https://localhost:8080/signin');
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -28,7 +31,6 @@
                     console.log('Signed in as: ' + xhr.responseText);
                 };
                 xhr.send('email=' + email);
-                window.location.replace('signin');
             }
         }
         function signOut() {
@@ -46,6 +48,7 @@
         <h3>(Oho)</h3>
         <!--google signin button-->
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="signin" id="continue" style="visibility:hidden">Continue</a>
         <a href="#" onclick="signOut();">Sign out</a>
     </div>
 
