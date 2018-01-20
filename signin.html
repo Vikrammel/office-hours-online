@@ -31,12 +31,14 @@
 <body>
   <p>logged in as <span id="email"></span></p>
   <a href="#" data-message="prof" onclick="handleRole(event);">Professor</a>
+  <br>
   <a href="#" data-message="stud" onclick="handleRole(event);">Student</a>
   <div id="videos">
     <div id="subscriber"></div>
     <div id="publisher"></div>
   </div>
   <!--google signout code-->
+  <br>
   <a href="/">Switch accounts/log out</a>
 
   <script>document.getElementById("email").innerHTML = localStorage.getItem("email");</script>
