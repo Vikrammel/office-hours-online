@@ -8,10 +8,13 @@
   <meta name="google-signin-client_id" 
         content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
   <script>
-    function roleSelect(){
+    function handleRole(event){
       var email = localStorage.getItem("email", email);
+      var role = event.target.dataset.message;
+
       console.log('Signed in as: ' + email);
-      //console.log('role: ' + role.target.dataset.message);
+      console.log('role: ' + role);
+      //code below not sending data to server right, email not appearing in web server console
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'https://localhost:8080/room');
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -25,8 +28,8 @@
 
 <body>
   <p>logged in as <span id="email"></span></p>
-  <a href="#" data-message="prof" onclick="roleSelect()">Professor</a>
-  <a href="#" data-message="stud" onclick="roleSelect()">Student</a>
+  <a href="#" data-message="prof" onclick="handleRole(event);">Professor</a>
+  <a href="#" data-message="stud" onclick="handleRole(event);">Student</a>
   <div id="videos">
     <div id="subscriber"></div>
     <div id="publisher"></div>
