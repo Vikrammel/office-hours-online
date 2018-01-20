@@ -1,5 +1,5 @@
 {
-  "name": "OfficeHoursOnline",
+  "name": "office-hours-online",
   "version": "1.0.0",
   "description": "virtual instructor office hours",
   "main": "app.js",
@@ -18,9 +18,14 @@
   },
   "homepage": "https://bitbucket.org/colinmaher/office-hours-online",
   "dependencies": {
+    "@opentok/client": "^2.12.2",
     "body-parser": "*",
     "cors": "*",
     "express": "*",
+    "opentok": "^2.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
     "nodemon": "*"
   }
 }
