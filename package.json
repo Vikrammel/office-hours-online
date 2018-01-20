@@ -1,0 +1,26 @@
+{
+  "name": "OfficeHoursOnline",
+  "version": "1.0.0",
+  "description": "virtual instructor office hours",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/colinmaher/office-hours-online.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/colinmaher/office-hours-online/issues"
+  },
+  "homepage": "https://bitbucket.org/colinmaher/office-hours-online",
+  "dependencies": {
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "nodemon": "*"
+  }
+}
