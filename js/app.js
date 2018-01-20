@@ -33,15 +33,19 @@ const opentok = new OpenTok(apiKey, apiSecret);
 // reset these values if you want to have a room-to-session association in your production
 // application you should consider a more persistent storage
 
-let roomToSessionIdDictionary = {};
+var roomToSessionIdDictionary = {};
 
-let users = {};
-
-var userObj = function (email) {
+var studentObj = function (email) {
     this.email = email;
     this.name = email.substr(0, email.indexOf('@'));
     this.sessionId = null;
-    this.professor = false;
+}
+
+var professorObj = function (email) {
+    this.email = email;
+    this.name = email.substr(0, email.indexOf('@'));
+    this.sessionId = null;
+    this.queue = [];
 }
 // returns the room name, given a session ID that was associated with it
 function findRoomFromSessionId(sessionId) {
