@@ -19,20 +19,26 @@
             var email = String(profile.getEmail());
             localStorage.setItem("email", email);
             var contElem = document.getElementById('continue');
+            var signOutElem = document.getElementById('signout');
             if(email.indexOf("ucsc.edu")== -1){
                 alert("Please sign in with an @ucsc.edu email");
                 contElem.style.visibility='hidden';
             }
             else{
                 contElem.style.visibility='visible';
+                signOutElem.style.visibility='visible';
 
             }
         }
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
+            var contElem = document.getElementById('continue');
+            var signOutElem = document.getElementById('signout');
             auth2.signOut().then(function () {
                 console.log('User signed out.');
             });
+            contElem.style.visibility='hidden';
+            signOutElem.style.visibility='hidden';
         }
     </script>
 </head>
@@ -44,7 +50,7 @@
         <!--google signin button-->
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <a href="signin" id="continue" style="visibility:hidden">Continue</a>
-        <a href="#" onclick="signOut();">Sign out</a>
+        <a href="#" id="signout" style="visibility:hidden" onclick="signOut();">Sign out</a>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
