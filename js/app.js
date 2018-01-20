@@ -24,4 +24,9 @@ app.get('/signin', (req, res) => {
     res.sendFile(path.join(__dirname, '../signin.html'))}
 );
 
+app.get('/room', (req, res) => {
+    var email = req.body.email;
+    console.log(email);
+});
+
 app.listen(port, () => console.log('OfficeHoursOnline listening on ' + port));

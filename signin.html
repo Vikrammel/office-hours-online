@@ -5,12 +5,28 @@
   <meta charset="utf-8">
   <title>OfficeHoursOnline Room</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" 
+        content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
+  <script>
+    function roleSelect(){
+      var email = localStorage.getItem("email", email);
+      console.log('Signed in as: ' + email);
+      //console.log('role: ' + role.target.dataset.message);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://localhost:8080/room');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+      };
+      xhr.send(email);
+    }
+  </script>
 </head>
 
 <body>
   <p>logged in as <span id="email"></span></p>
-  <a href="#">Professor</a>
-  <a href="#">Student</a>
+  <a href="#" data-message="prof" onclick="roleSelect()">Professor</a>
+  <a href="#" data-message="stud" onclick="roleSelect()">Student</a>
   <div id="videos">
     <div id="subscriber"></div>
     <div id="publisher"></div>
