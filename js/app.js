@@ -66,4 +66,9 @@ app.get('/room/:name', function (req, res) {
 });
 
 
+app.get('/room', (req, res) => {
+    var email = req.body.email;
+    console.log(email);
+});
+
 app.listen(port, () => console.log('OfficeHoursOnline listening on ' + port));

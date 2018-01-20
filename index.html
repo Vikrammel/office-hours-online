@@ -17,6 +17,7 @@
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
             var email = String(profile.getEmail());
+            localStorage.setItem("email", email);
             var contElem = document.getElementById('continue');
             if(email.indexOf("ucsc.edu")== -1){
                 alert("Please sign in with an @ucsc.edu email");
@@ -24,13 +25,7 @@
             }
             else{
                 contElem.style.visibility='visible';
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'https://localhost:8080/signin');
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function() {
-                    console.log('Signed in as: ' + xhr.responseText);
-                };
-                xhr.send('email=' + email);
+
             }
         }
         function signOut() {
