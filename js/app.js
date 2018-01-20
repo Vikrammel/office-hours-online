@@ -18,7 +18,10 @@ const apiSecret = process.env.API_SECRET;
 //     if (err) return console.log(err);
 // });
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../html/index.html')));
-app.get('/room', (req, res) => res.sendFile(path.join(__dirname, '../html/room.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+
+app.get('/signin', (req, res) => {
+    res.sendFile(path.join(__dirname, '../room.html'))}
+);
 
 app.listen(port, () => console.log('OfficeHoursOnline listening on ' + port));
