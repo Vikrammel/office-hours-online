@@ -23,6 +23,7 @@
     "cors": "*",
     "dotenv": "^4.0.0",
     "express": "*",
+    "lodash": "^4.17.4",
     "opentok": "^2.6.1"
   },
   "devDependencies": {
