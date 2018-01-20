@@ -26,7 +26,7 @@ if (!apiKey || !secret) {
     process.exit();
 }
 
-const opentok = new OpenTok(apiKey, apiSecret);
+const opentok = new OpenTok(apiKey, secret);
 
 // IMPORTANT: roomToSessionIdDictionary is a variable that associates room names with unique
 // unique sesssion IDs. However, since this is stored in memory, restarting your server will
