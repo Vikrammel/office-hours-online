@@ -1,6 +1,41 @@
 <!DOCTYPE html>
 <html>
 
+    <style>
+        
+        #main {
+            background: rgb(236, 236, 236);
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2), 0 10px 10px 0 rgba(0, 0, 0, 0.24); 
+            width:400px;
+            height:250px;
+            position:absolute;
+            left:50%;
+            top:40%;
+            margin:-125px 0 0 -200px;
+        }
+      
+        .option {
+          padding: 20px;
+          width: 250px;
+          display:inline-block;
+        }
+
+        .buttons {
+          padding: 20px;
+          margin-bottom: 20px;
+          display: inline-block;
+        }
+        body {
+          background: #4e4e4e;
+          font-family: "Roboto", sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;      
+        }
+        
+        </style>
+
 <head>
   <meta charset="utf-8">
   <title>OfficeHoursOnline Room</title>
@@ -22,16 +57,7 @@
         //code below not sending data to server right, email not appearing in web server console
         var xhr = new XMLHttpRequest();
         var response = {};
-        var session = OT.initSession(response.apiKey, response.sessionId);
-        session.on({
-          streamCreated: (event) => {
-            session.subscribe(event.stream);
-          }
-        })
-        session.connect(response.token, (error) => {
-          const publisher = OT.initPublisher();
-          session.publish(publisher);
-        })
+        
         xhr.open('POST', '/room/' + email.substr(0, email.indexOf('@')));
         xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
         xhr.send(null);
@@ -62,19 +88,21 @@
 </head>
 
 <body>
-  <p>logged in as
+  <div id="main">
+  <p>Logged in as
     <span id="email"></span>
   </p>
-  <a href="#" data-message="prof" onclick="handleRole(event);">Professor</a>
-  <br>
-  <a href="#" data-message="stud" onclick="handleRole(event);">Student</a>
+  <div class=option>
+  <a href="#" class="buttons" data-message="stud" onclick="handleRole(event);">Student</a>
+  <a href="#" class="buttons" data-message="prof" onclick="handleRole(event);">Professor</a>
+  <a href="/">Switch accounts/log out</a>
+</div>
   <div id="videos">
     <div id="subscriber"></div>
     <div id="publisher"></div>
   </div>
   <!--google signout code-->
-  <br>
-  <a href="/">Switch accounts/log out</a>
+  </div>
 
   <script>
     document.getElementById("email").innerHTML = localStorage.getItem("email");
