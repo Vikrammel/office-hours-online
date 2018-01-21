@@ -47,31 +47,20 @@ function checkProfs(email) {
     });
 }
 //student constructor that can join queue and leave queue
-var studentObj = function (email) {
-    this.email = email;
-    this.name = email.substr(0, email.indexOf('@'));
+var studentObj = function (name, profName) {
+    this.email = name + "@ucsc.edu";
+    this.name = name;
     this.sessionId = null;
-    this.professorEmail = null;
+    this.profEmail = profName + "@ucsc.edu";
     this.token = null;
     this.joinRoom = function () {
-        var index = professors.findIndex(function (element) {
-            return element.email == this.professorEmail;
-        });
-        if (index !== -1) {
-            professors[index].addToQueue(this);
-        } else {
-            console.log("professor not found");
+        if (checkProfs(this.profEmail)) {
+            professors[checkProfs(this.profEmail)].addToQueue(this.name);
         }
     }
     this.leaveQueue = function () {
-        var index = professors.findIndex(function (element) {
-            return element.email == this.professorEmail;
-        });
-        if (index !== -1) {
-            professors[index].removeFromQueue(this);
-        } else {
-            return "not found";
-            console.log("professor not found");
+        if (checkProfs(this.profEmail)) {
+            professors[checkProfs(this.profEmail)].removeFromQueue(this.name);
         }
     }
 }
@@ -111,7 +100,12 @@ var professorObj = function (name, res) {
     this.addToQueue = function (student) {
         this.queue.push(student);
     };
-    this.removeFromQueue = function () {
+
+    this.removeFromQueue = function (name) {
+        this.queue = this.queue.filter(e => e.name == name);
+    };
+
+    this.popFront = function () {
         this.queue.shift();
     };
 }
@@ -144,9 +138,12 @@ app.get('/signin', (req, res) => {
 
 //router.post('/room/:name',
 app.get('/room/:profName/:name', function (req, res) {
-    token = opentok.generateToken(session.sessionId);
-    console.log(req.params.profName);
-    console.log(req.params.name);
+    var stud = new studentObj(req.params.name, req.params.profName);
+    stud.joinRoom();
+    //res.sendFile(path.join(__dirname, '../room.html'));
+    // token = opentok.generateToken(session.sessionId);
+    // console.log(req.params.profName);
+    // console.log(req.params.name);
 });
 
 
