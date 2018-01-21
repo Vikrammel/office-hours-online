@@ -38,18 +38,58 @@ const opentok = new OpenTok(apiKey, secret);
 
 var roomToSessionIdDictionary = {};
 
+//array for storing professors that are connected
+var professors = [];
+
+//student constructor that can join queue and leave queue
 var studentObj = function (email) {
     this.email = email;
     this.name = email.substr(0, email.indexOf('@'));
     this.sessionId = null;
+    this.professorEmail = null;
+    this.joinRoom = function () {
+        var index = professors.findIndex(function (element) {
+            return element.email == this.professorEmail;
+        });
+        if (index !== -1) {
+            professors[index].addToQueue(this);
+        } else {
+            console.log("professor not found");
+        }
+    }
+    this.leaveQueue = function() {
+        var index = professors.findIndex(function (element) {
+            return element.email == this.professorEmail;
+        });
+        if (index !== -1) {
+            professors[index].removeFromQueue(this);
+        } else {
+            console.log("professor not found");
+        }
+    }
 }
 
+//professor constructor defining an individual professor with an email and queue functionality
 var professorObj = function (email) {
     this.email = email;
     this.name = email.substr(0, email.indexOf('@'));
     this.sessionId = null;
     this.queue = [];
+    this.addToQueue = function (student) {
+        this.queue.push(student);
+    };
+    this.removeFromQueue = function () {
+        this.queue.shift();
+    };
 }
+
+var student = new studentObj('csmaher@ucsc.edu');
+var prof = new professorObj('professor@ucsc.edu');
+professors.push(prof);
+
+student.joinRoom('professor@ucsc.edu');
+// console.log(professors);
+// console.log(professors[0].queue);
 // returns the room name, given a session ID that was associated with it
 function findRoomFromSessionId(sessionId) {
     return _.findKey(roomToSessionIdDictionary, function (value) {
@@ -68,7 +108,7 @@ app.get('/signin', (req, res) => {
     res.sendFile(path.join(__dirname, '../signin.html'))
 });
 
-app.get('/room/:name', function (req, res) {
+router.get('/room/:name', function (req, res) {
 
 });
 
