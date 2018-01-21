@@ -97,8 +97,9 @@ var professorObj = function (name, res) {
                 // generate token
                 self.token = opentok.generateToken(session.sessionId, {role:"moderator"});
                 //res.setHeader('Content-Type', 'application/json');
+                professors.push(self);
+                //console.log(professors);
             });
-            professors.push(this);
         }
     }
 
@@ -164,7 +165,7 @@ app.get('/getToxBoxToken/:name', (req, res) => {
         //console.log("inside if" + from[4]);
         //look through profs to see if name matches, send token
         var profInd = checkProfs(name + "@ucsc.edu")
-        console.log("profInd: " + profInd);
+        //console.log("profInd: " + profInd);
         if (profInd != -1){
             token = professors[profInd].token;
             sessionId = professors[profInd].sessionId;
@@ -183,8 +184,8 @@ app.get('/getToxBoxToken/:name', (req, res) => {
         }
     }
     
-    console.log(token);
-    console.log(sessionId);
+    //console.log(token);
+    //console.log(sessionId);
     //check if professor first
     //console.log(token + ' ' + sessionId + ' ' + apiKey);
     res.send(
