@@ -8,22 +8,22 @@
   <meta name="google-signin-client_id" 
         content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
   <script>
+    var obj = {};
     var email = localStorage.getItem("email");
-
+    obj.email = String(email);
     function handleRole(event){
       var role = event.target.dataset.message;
-
+      obj.role = role;
       console.log('Signed in as: ' + email);
       console.log('role: ' + role);
 
       //code below not sending data to server right, email not appearing in web server console
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://localhost:8080/room');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function() {
-        console.log('Signed in as: ' + xhr.responseText);
-      };
-      xhr.send(email);
+      xhr.open('POST', '/room');
+      xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
+      xhr.send(JSON.stringify(obj));
+
+      console.log("after send");
     }
   </script>
 </head>

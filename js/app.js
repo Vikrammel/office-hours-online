@@ -9,8 +9,11 @@ const OpenTok = require('opentok');
 const path = require('path');
 const _ = require('lodash');
 const bodyParser = require('body-parser');
+
 const app = express();
 const port = 8080;
+
+app.use(bodyParser.json());
 
 const apiKey = process.env.API_KEY;
 const secret = process.env.API_SECRET;
@@ -70,9 +73,10 @@ app.get('/room/:name', function (req, res) {
 });
 
 
-app.get('/room', (req, res) => {
-    var email = req.body.email;
-    console.log(email);
+app.post('/room', (req, res) => {
+    //var email = req.body;
+    console.log(req.body.email);
+    console.log(req.body.role);
 });
 
 app.listen(port, () => console.log('OfficeHoursOnline listening on ' + port));
