@@ -1,4 +1,52 @@
 <!doctype html>
+<style>
+
+#login {
+    background: rgb(236, 236, 236);
+    border-radius: 5px;
+    /* padding: 45px; */
+     text-align: center;
+    /* vertical-align: center; */ 
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2), 0 10px 10px 0 rgba(0, 0, 0, 0.24); 
+    width:400px;
+    height:250px;
+    position:absolute;
+    left:50%;
+    top:40%;
+    margin:-125px 0 0 -200px;
+}
+
+body {
+  background: #4e4e4e;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+.g-signin2{
+    width: 100%;
+  }
+  
+  .g-signin2 > div{
+    margin: 0 auto;
+  }
+
+#buttons {
+    margin-top: 40px;
+}
+#signout {
+    padding: 15px;
+    margin-top: 100px;
+    margin-bottom: 400px;
+}
+
+#continue {
+    padding: 15px;
+}
+
+
+</style>
+
 
 <html lang="en">
 
@@ -9,10 +57,6 @@
     <!--info for google api access-->
     <meta name="google-signin-client_id" 
         content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="css/index.css">
     <script>
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
@@ -37,20 +81,17 @@
 </head>
 
 <body>
-    <div id="page-wrap">
+    <div id="login">
         <h1>OfficeHoursOnline</h1>
-        <h3>(Oho)</h3>
         <!--google signin button-->
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <a href="signin" id="continue" style="visibility:hidden">Continue</a>
-        <a href="#" onclick="signOut();">Sign out</a>
+        <div class="g-signin2" data-width="200" data-height="50" data-onsuccess="onSignIn"></div>
+        <div id="buttons"><a href="signin" id="continue" style="visibility:hidden">Continue</a>
+        <a href="#" id="signout" onclick="signOut();">Sign out</a>
+        </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
-        crossorigin="anonymous"></script>
 </body>
 
 </html>
