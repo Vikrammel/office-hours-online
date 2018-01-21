@@ -6,6 +6,7 @@
   <title>OfficeHoursOnline Room</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-signin-client_id" content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
+  <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
   <script>
     var obj = {};
     var email = localStorage.getItem("email");
@@ -20,12 +21,25 @@
       if (role == "prof") {
         //code below not sending data to server right, email not appearing in web server console
         var xhr = new XMLHttpRequest();
+        var response = {};
+        var session = OT.initSession(response.apiKey, response.sessionId);
+        session.on({
+          streamCreated: (event) => {
+            session.subscribe(event.stream);
+          }
+        })
+        session.connect(response.token, (error) => {
+          const publisher = OT.initPublisher();
+          session.publish(publisher);
+        })
         xhr.open('POST', '/room/' + email.substr(0, email.indexOf('@')));
         xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
         xhr.send(null);
         xhr.onreadystatechange = function () {
           if (xhr.readyState == XMLHttpRequest.DONE) {
-            console.log(xhr.responseText);
+            response.apiKey = xhr.responseText.apiKey;
+            response.sessionId = xhr.responseText.sessionId;
+            response.token = xhr.responseText.token;
           }
         }
 
