@@ -5,28 +5,33 @@
   <meta charset="utf-8">
   <title>OfficeHoursOnline Room</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="google-signin-client_id" 
-        content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
+  <meta name="google-signin-client_id" content="144888334346-q2reo5jb44s0ges19r5ikpggq5f014qh.apps.googleusercontent.com">
   <script>
     var obj = {};
     var email = localStorage.getItem("email");
     obj.email = String(email);
-    function handleRole(event){
+
+    function handleRole(event) {
       var role = event.target.dataset.message;
       obj.role = role;
       console.log('Signed in as: ' + email);
       console.log('role: ' + role);
 
-      if (role=="prof"){
+      if (role == "prof") {
         //code below not sending data to server right, email not appearing in web server console
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/room/' + email.substr(0, email.indexOf('@')));
         xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
-        //xhr.send(JSON.stringify(obj));
-      }
-      else{
+        xhr.send(null);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+            console.log(xhr.responseText);
+          }
+        }
+
+      } else {
         var profEmail = prompt("Please enter your professor's email", "example@ucsc.edu");
-        while(profEmail == "example@ucsc.edu"){
+        while (profEmail == "example@ucsc.edu") {
           var profEmail = prompt("Please enter your professor's email", "example@ucsc.edu");
         }
         var student = {};
@@ -43,7 +48,9 @@
 </head>
 
 <body>
-  <p>logged in as <span id="email"></span></p>
+  <p>logged in as
+    <span id="email"></span>
+  </p>
   <a href="#" data-message="prof" onclick="handleRole(event);">Professor</a>
   <br>
   <a href="#" data-message="stud" onclick="handleRole(event);">Student</a>
@@ -55,7 +62,9 @@
   <br>
   <a href="/">Switch accounts/log out</a>
 
-  <script>document.getElementById("email").innerHTML = localStorage.getItem("email");</script>
+  <script>
+    document.getElementById("email").innerHTML = localStorage.getItem("email");
+  </script>
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

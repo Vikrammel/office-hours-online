@@ -41,6 +41,11 @@ var roomToSessionIdDictionary = {};
 //array for storing professors that are connected
 var professors = [];
 
+function checkProfs(email) {
+    professors.findIndex(function (element) {
+        return element.email == email;
+    });
+}
 //student constructor that can join queue and leave queue
 var studentObj = function (email) {
     this.email = email;
@@ -57,7 +62,7 @@ var studentObj = function (email) {
             console.log("professor not found");
         }
     }
-    this.leaveQueue = function() {
+    this.leaveQueue = function () {
         var index = professors.findIndex(function (element) {
             return element.email == this.professorEmail;
         });
@@ -71,11 +76,43 @@ var studentObj = function (email) {
 }
 
 //professor constructor defining an individual professor with an email and queue functionality
-var professorObj = function (email) {
-    this.email = email;
-    this.name = email.substr(0, email.indexOf('@'));
+var professorObj = function (name, res) {
+    this.email = name + "@ucsc.edu";
+    this.name = name;
     this.sessionId = null;
     this.queue = [];
+    this.createSession = function () {
+        if (!checkProfs(this.email)) {
+            //generate session id
+            var token;
+            opentok.createSession(function (err, session) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send({
+                        error: 'createSession error:' + err
+                    });
+                    return;
+                }
+
+                // now that the room name has a session associated wit it, store it in memory
+                // IMPORTANT: Because this is stored in memory, restarting your server will reset these values
+                // if you want to store a room-to-session association in your production application
+                // you should use a more persistent storage for them
+                roomToSessionIdDictionary[name] = session.sessionId;
+
+                // generate token
+                token = opentok.generateToken(session.sessionId);
+                res.setHeader('Content-Type', 'application/json');
+                res.send({
+                    apiKey: apiKey,
+                    sessionId: session.sessionId,
+                    token: token
+                });
+            });
+            professors.push(this);
+        }
+    }
+
     this.addToQueue = function (student) {
         this.queue.push(student);
     };
@@ -91,6 +128,7 @@ var professorObj = function (email) {
 //student.joinRoom('professor@ucsc.edu');
 // console.log(professors);
 // console.log(professors[0].queue);
+
 // returns the room name, given a session ID that was associated with it
 function findRoomFromSessionId(sessionId) {
     return _.findKey(roomToSessionIdDictionary, function (value) {
@@ -116,7 +154,9 @@ app.get('/room/:profName/:name', function (req, res) {
 });
 
 
-app.post('/room', (req, res) => {
+app.post('/room/:profName', (req, res) => {
+    var prof = new professorObj(req.params.profName, res);
+    prof.createSession();
     console.log(req.body.email);
     console.log(req.body.role);
 });
