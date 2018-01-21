@@ -52,6 +52,7 @@ var studentObj = function (email) {
     this.name = email.substr(0, email.indexOf('@'));
     this.sessionId = null;
     this.professorEmail = null;
+    this.token = null;
     this.joinRoom = function () {
         var index = professors.findIndex(function (element) {
             return element.email == this.professorEmail;
@@ -81,10 +82,10 @@ var professorObj = function (name, res) {
     this.name = name;
     this.sessionId = null;
     this.queue = [];
+    var token;
     this.createSession = function () {
         if (!checkProfs(this.email)) {
             //generate session id
-            var token;
             opentok.createSession(function (err, session) {
                 if (err) {
                     console.log(err);
@@ -98,16 +99,10 @@ var professorObj = function (name, res) {
                 // IMPORTANT: Because this is stored in memory, restarting your server will reset these values
                 // if you want to store a room-to-session association in your production application
                 // you should use a more persistent storage for them
-                roomToSessionIdDictionary[name] = session.sessionId;
-
+                roomToSessionIdDictionary[session.sessionId] = [this];
                 // generate token
                 token = opentok.generateToken(session.sessionId);
-                res.setHeader('Content-Type', 'application/json');
-                res.send({
-                    apiKey: apiKey,
-                    sessionId: session.sessionId,
-                    token: token
-                });
+                //res.setHeader('Content-Type', 'application/json');
             });
             professors.push(this);
         }
@@ -149,16 +144,18 @@ app.get('/signin', (req, res) => {
 
 //router.post('/room/:name',
 app.get('/room/:profName/:name', function (req, res) {
+    token = opentok.generateToken(session.sessionId);
     console.log(req.params.profName);
     console.log(req.params.name);
 });
 
 
-app.post('/room/:profName', (req, res) => {
+app.get('/room/:profName', (req, res) => {
     var prof = new professorObj(req.params.profName, res);
     prof.createSession();
-    console.log(req.body.email);
-    console.log(req.body.role);
+    res.sendFile(path.join(__dirname, '../room.html'));
+    // console.log(req.body.email);
+    // console.log(req.body.role);
 });
 
 app.listen(port, () => console.log('OfficeHoursOnline listening on ' + port));
