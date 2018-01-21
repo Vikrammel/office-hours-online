@@ -46,6 +46,7 @@ function checkProfs(email) {
 }
 //student constructor that can join queue and leave queue
 var studentObj = function (name, profName) {
+    var self = this;
     this.email = name + "@ucsc.edu";
     this.name = name;
     this.sessionId = null;
@@ -53,13 +54,13 @@ var studentObj = function (name, profName) {
     this.token = null;
     this.joinRoom = function () {
         if (checkProfs(this.profEmail)!=-1) {
-            professors[checkProfs(this.profEmail)].addToQueue(this);
             this.sessionId = professors[checkProfs(this.profEmail)].sessionId;
+            professors[checkProfs(this.profEmail)].addToQueue(this);
             if(professors[checkProfs(this.profEmail)].queue[0].name == this.name){
-                this.token = opentok.generateToken(sessionId, {role:"publisher"});
+                this.token = opentok.generateToken(self.sessionId, {role:"publisher"});
             }
             else{
-                this.token = opentok.generateToken(sessionId, {role:"subscriber"});
+                this.token = opentok.generateToken(self.sessionId, {role:"subscriber"});
             }
         }
     }
