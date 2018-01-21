@@ -64,6 +64,7 @@ var studentObj = function (email) {
         if (index !== -1) {
             professors[index].removeFromQueue(this);
         } else {
+            return "not found";
             console.log("professor not found");
         }
     }
@@ -83,11 +84,11 @@ var professorObj = function (email) {
     };
 }
 
-var student = new studentObj('csmaher@ucsc.edu');
-var prof = new professorObj('professor@ucsc.edu');
-professors.push(prof);
+//var student = new studentObj('csmaher@ucsc.edu');
+//var prof = new professorObj('professor@ucsc.edu');
+//professors.push(prof);
 
-student.joinRoom('professor@ucsc.edu');
+//student.joinRoom('professor@ucsc.edu');
 // console.log(professors);
 // console.log(professors[0].queue);
 // returns the room name, given a session ID that was associated with it
@@ -108,13 +109,14 @@ app.get('/signin', (req, res) => {
     res.sendFile(path.join(__dirname, '../signin.html'))
 });
 
-router.get('/room/:name', function (req, res) {
-
+//router.post('/room/:name',
+app.get('/room/:profName/:name', function (req, res) {
+    console.log(req.params.profName);
+    console.log(req.params.name);
 });
 
 
 app.post('/room', (req, res) => {
-    //var email = req.body;
     console.log(req.body.email);
     console.log(req.body.role);
 });

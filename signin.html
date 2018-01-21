@@ -17,11 +17,25 @@
       console.log('Signed in as: ' + email);
       console.log('role: ' + role);
 
-      //code below not sending data to server right, email not appearing in web server console
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/room');
-      xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
-      xhr.send(JSON.stringify(obj));
+      if (role=="prof"){
+        //code below not sending data to server right, email not appearing in web server console
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/room/' + email.substr(0, email.indexOf('@')));
+        xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
+        //xhr.send(JSON.stringify(obj));
+      }
+      else{
+        var profEmail = prompt("Please enter your professor's email", "example@ucsc.edu");
+        while(profEmail == "example@ucsc.edu"){
+          var profEmail = prompt("Please enter your professor's email", "example@ucsc.edu");
+        }
+        var student = {};
+        student.name = email.substr(0, email.indexOf('@'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/room/' + profEmail.substr(0, profEmail.indexOf('@')) + '/' + student.name);
+        xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
+        xhr.send(null);
+      }
 
       console.log("after send");
     }
