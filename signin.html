@@ -41,10 +41,11 @@
         }
         var student = {};
         student.name = email.substr(0, email.indexOf('@'));
-        var xhr = new XMLHttpRequest();
+        /*var xhr = new XMLHttpRequest();
         xhr.open('GET', '/room/' + profEmail.substr(0, profEmail.indexOf('@')) + '/' + student.name);
         xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
-        xhr.send(null);
+        xhr.send(null);*/
+        window.location.replace('/room/' + profEmail.substr(0, profEmail.indexOf('@')) + '/' + student.name);
 
       }
 
@@ -62,7 +63,7 @@
   <a href="#" data-message="stud" onclick="handleRole(event);">Student</a>
   
   <!--google signout code-->
-  <br>
+  <br><br>
   <a href="/">Switch accounts/log out</a>
 
   <script>
