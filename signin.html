@@ -70,9 +70,9 @@
         window.location.replace('/room/' + email.substr(0, email.indexOf('@')));
 
       } else {
-        var profEmail = prompt("Please enter your professor's email", "example@ucsc.edu");
-        while (profEmail == "example@ucsc.edu") {
-          var profEmail = prompt("Please enter your professor's email", "example@ucsc.edu");
+        var profEmail = prompt("Please enter your professor's email", "example@gmail.com");
+        while (profEmail == "example@gmail.com") {
+          var profEmail = prompt("Please enter your professor's email", "example@gmail.com");
         }
         var student = {};
         student.name = email.substr(0, email.indexOf('@'));

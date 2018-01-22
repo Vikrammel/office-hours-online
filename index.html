@@ -63,8 +63,8 @@ body {
             var email = String(profile.getEmail());
             localStorage.setItem("email", email);
             var contElem = document.getElementById('continue');
-            if(email.indexOf("ucsc.edu")== -1){
-                alert("Please sign in with an @ucsc.edu email");
+            if(email.indexOf("@gmail")== -1){
+                alert("Please sign in with a valid  @gmail address");
                 contElem.style.visibility='hidden';
             }
             else{

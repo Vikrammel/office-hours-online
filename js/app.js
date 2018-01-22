@@ -47,10 +47,10 @@ function checkProfs(email) {
 //student constructor that can join queue and leave queue
 var studentObj = function (name, profName) {
     var self = this;
-    this.email = name + "@ucsc.edu";
+    this.email = name + "@gmail.com";
     this.name = name;
     this.sessionId = null;
-    this.profEmail = profName + "@ucsc.edu";
+    this.profEmail = profName + "@gmail.com";
     this.token = null;
     this.joinRoom = function () {
         if (checkProfs(this.profEmail)!=-1) {
@@ -74,7 +74,7 @@ var studentObj = function (name, profName) {
 //professor constructor defining an individual professor with an email and queue functionality
 var professorObj = function (name, res) {
     var self = this;
-    this.email = name + "@ucsc.edu";
+    this.email = name + "@gmail.com";
     this.name = name;
     this.sessionId = null;
     this.queue = [];
@@ -117,11 +117,11 @@ var professorObj = function (name, res) {
     };
 }
 
-//var student = new studentObj('csmaher@ucsc.edu');
-//var prof = new professorObj('professor@ucsc.edu');
+//var student = new studentObj('csmaher@gmail.com');
+//var prof = new professorObj('professor@gmail.com');
 //professors.push(prof);
 
-//student.joinRoom('professor@ucsc.edu');
+//student.joinRoom('professor@gmail.com');
 // console.log(professors);
 // console.log(professors[0].queue);
 
@@ -165,7 +165,7 @@ app.get('/getToxBoxToken/:name', (req, res) => {
     if (from.length==5){
         //console.log("inside if" + from[4]);
         //look through profs to see if name matches, send token
-        var profInd = checkProfs(name + "@ucsc.edu")
+        var profInd = checkProfs(name + "@gmail.com")
         //console.log("profInd: " + profInd);
         if (profInd != -1){
             token = professors[profInd].token;
@@ -174,7 +174,7 @@ app.get('/getToxBoxToken/:name', (req, res) => {
     }
     else if (from.length==6){
         var profName = from[4];
-        var profInd = checkProfs(profName + "@ucsc.edu");
+        var profInd = checkProfs(profName + "@gmail.com");
         var queueInd;
         if(profInd != -1){
             queueInd = professors[profInd].queue.findIndex(function (element) {
