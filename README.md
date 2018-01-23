@@ -1,5 +1,5 @@
 # OfficeHoursOnline (Oho)
-### Office hours student queuing video chat application using the Google login API, TokBox API by Mike Hamilton, Colin Maher, Vikram Melkote
+### Office hours student queuing video chat application using the Google login API, TokBox API by Mike Hamilton, Colin Maher, Vikram Melkote for CruzHacks 2018
 
 ## About
 
@@ -12,11 +12,11 @@ Didn't get to: The rest of the page is a canvas visible to the room which the pr
 ## Setup
 
 1. clone repo with git or download contents
-`git clone https://vikrammel@bitbucket.org/colinmaher/office-hours-online.git`
+`git clone https://github.com/Vikrammel/office-hours-online.git`
 
 2. Install node.js from [here](https://www.npmjs.com/get-npm)
 
-3. run `sudo npm install` in project directory
+3. run `npm install` in project directory
 
 4. run server using `node app.js` or `nodemon`
 
