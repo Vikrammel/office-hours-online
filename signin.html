@@ -44,30 +44,34 @@
   <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
   <script>
     var obj = {};
-    var email = localStorage.getItem("email");
-    obj.email = String(email);
+    var gtoken = localStorage.getItem("gtoken");
+    obj.gtoken = gtoken;
 
     function handleRole(event) {
       var role = event.target.dataset.message;
       obj.role = role;
-      console.log('Signed in as: ' + email);
+      var email = localStorage.getItem("email");
+      //console.log('Signed in as: ' + email);
       console.log('role: ' + role);
 
       if (role == "prof") {
         //code below not sending data to server right, email not appearing in web server console
-       /* var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         var response = {};
-        xhr.open('GET', '/room/' + email.substr(0, email.indexOf('@')));
-        xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
-        xhr.send(null);
+        xhr.open('POST', '/auth/', false);
+        //xhr.responseType = "document";
+        xhr.setRequestHeader("Content-Type", "text", "charset=utf-8");
+        xhr.send(gtoken);
         xhr.onreadystatechange = function () {
           if (xhr.readyState == XMLHttpRequest.DONE) {
-            response.apiKey = xhr.responseText.apiKey;
-            response.sessionId = xhr.responseText.sessionId;
-            response.token = xhr.responseText.token;
+            if(response.success == "yes"){
+              window.location.replace('/room/' + email.substr(0, email.indexOf('@')));
+            }
+            else{
+              window.location.replace('/');
+            }
           }
-        }*/
-        window.location.replace('/room/' + email.substr(0, email.indexOf('@')));
+        }
 
       } else {
         var profEmail = prompt("Please enter your professor's email", "example@gmail.com");
@@ -98,12 +102,13 @@
   <a href="#" class="buttons" data-message="stud" onclick="handleRole(event);">Student</a>
   <a href="#" class="buttons" data-message="prof" onclick="handleRole(event);">Professor</a>
   <a href="/">Switch accounts/log out</a>
+  <!-- <a href="#" id="signout" onclick="signOut();">Sign out</a> -->
+
 </div>
   <div id="videos">
     <div id="subscriber"></div>
     <div id="publisher"></div>
   </div>
-  <!--google signout code-->
   </div>
 
   <script>

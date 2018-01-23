@@ -14,19 +14,18 @@
     <script src="https://static.opentok.com/v2/js/opentok.js" charset="utf-8"></script>
     <script>
       var xhr = new XMLHttpRequest();
-      var email = localStorage.getItem("email");
+      var email = localStorage.getItem("gtoken");
       var xhr = new XMLHttpRequest();
         var response = {};
-        xhr.open('GET', '/getToxBoxToken/' + email.substr(0, email.indexOf('@')));
+        xhr.open('GET', '/getToxBoxToken/' + gtoken);
         xhr.setRequestHeader("Content-Type", "application/json", "charset=utf-8");
         xhr.send(null);
         xhr.onreadystatechange = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-          
+        if (xhr.readyState == XMLHttpRequest.DONE) {  
           // response.sessionId = xhr.responseText.sessionId;
           // response.token = xhr.responseText.token;
-          //response = JSON.parse(xhr.responseText);
-          console.log(JSON.parse(xhr.responseText).token);
+          // response = JSON.parse(xhr.responseText);
+          // console.log(JSON.parse(xhr.responseText).token);
           response= JSON.parse(xhr.responseText);
           const session = OT.initSession(response.apiKey, response.sessionId);
           session.on({

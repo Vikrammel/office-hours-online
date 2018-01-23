@@ -1,3 +1,6 @@
+/*import { toASCII } from 'punycode';
+import { read } from 'fs';*/
+
 //import { request } from 'http';
 
 //sets environment variables in .env file
@@ -39,6 +42,29 @@ const opentok = new OpenTok(apiKey, secret);
 //array for storing professors that are connected
 var professors = [];
 
+//check goole login token
+function checkAuth(token, profEmail){
+    //check if student is currently in a prof's queue
+    if(profEmail.length > 0){
+        var profInd = checkProfs(profEmail);
+        for (var student in professors[profInd].queue){
+            if (student.gtoken == token){
+                return student.email;
+            }
+        }
+    }
+    //check if token belongs to an existing professor
+    else{
+        for (var prof in professors){
+            if (prof.gtoken == token){
+                return prof.email;
+            }
+        }
+    }
+    //user not seen before, get info by sending token to gauth api
+
+}
+
 function checkProfs(email) {
     return professors.findIndex(function (element) {
          return element.email == email;
@@ -52,6 +78,7 @@ var studentObj = function (name, profName) {
     this.sessionId = null;
     this.profEmail = profName + "@gmail.com";
     this.token = null;
+    this.gtoken = null;
     this.joinRoom = function () {
         if (checkProfs(this.profEmail)!=-1) {
             this.sessionId = professors[checkProfs(this.profEmail)].sessionId;
@@ -79,6 +106,7 @@ var professorObj = function (name, res) {
     this.sessionId = null;
     this.queue = [];
     this.token = null;
+    this.gtoken = null;
     this.createSession = function () {
         if (checkProfs(this.email)==-1) {
             //generate session id
@@ -117,23 +145,15 @@ var professorObj = function (name, res) {
     };
 }
 
-//var student = new studentObj('csmaher@gmail.com');
-//var prof = new professorObj('professor@gmail.com');
-//professors.push(prof);
-
-//student.joinRoom('professor@gmail.com');
-// console.log(professors);
-// console.log(professors[0].queue);
-
-
-// let session = opentok.createSession(function (err, session) {
-//     if (err) return console.log(err);
-// });
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 app.get('/signin', (req, res) => {
-    res.sendFile(path.join(__dirname, '../signin.html'))
+    res.sendFile(path.join(__dirname, '../signin.html'));
+});
+
+app.post('/auth', (req, res) => {
+    console.log('hi');
 });
 
 //router.post('/room/:name',

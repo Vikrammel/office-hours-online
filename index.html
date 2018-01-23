@@ -60,7 +60,10 @@ body {
     <script>
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
-            var email = String(profile.getEmail());
+            var id_token = googleUser.getAuthResponse().id_token;
+            var email = profile.getEmail();
+            //var email = String(profile.getEmail());
+            localStorage.setItem("gtoken", id_token);
             localStorage.setItem("email", email);
             var contElem = document.getElementById('continue');
             if(email.indexOf("@gmail")== -1){
@@ -69,6 +72,7 @@ body {
             }
             else{
                 contElem.style.visibility='visible';
+                //window.location.replace('/signin');
             }
         }
         function signOut() {
