@@ -1,9 +1,9 @@
 # OfficeHoursOnline (Oho)
-### Office hours student queuing video chat application using the Google login API, TokBox API by Mike Hamilton, Colin Maher, Vikram Melkote for CruzHacks 2018
+### Student queuing video chat application using the Google login API, TokBox API by Mike Hamilton, Colin Maher, Vikram Melkote for CruzHacks 2018
 
 ## About
 
-A single site page where users can connect to a professor's room and queue up in the order they arrived in the room.
+A web app in which users can connect to professors' rooms and queue up in the order they arrived in the room.
 
 Site layout: professor's camera is visible in one part of the page at all times. A single student's camera is next to the professor's at any given time (student at the front of the queue). Other students can only subscribe to their streams until they are at the beginning of the queue. They are removed from this queue if they disconnect from the server.
 
